@@ -20,8 +20,6 @@ command_rules = {
     'markdown': {'arg_count': 4, 'file_checks': [2], 'function': convert_markdown_to_html},
 }
 
-# html = markdown.markdown('# Header h1')
-
 if __name__ == '__main__':
     try:
         validate_command(sys.argv, command_rules)
