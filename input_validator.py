@@ -28,7 +28,7 @@ def validate_arguments(args, command_rules):
     if len(args) != command_rules[command]['arg_count']:
         raise ValidationError(f"{command} requires exactly {command_rules[command]['arg_count'] - 1} arguments.")
     
-    # Validate that the file paths refer to existing files
+    # Check if file paths provided in the command arguments are valid
     for index in command_rules[command].get('file_checks', []):
         if os.path.isfile(args[index]) == False:
             raise ValidationError(f"Argument {index-1} is not a valid file path.")
