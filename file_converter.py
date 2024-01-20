@@ -3,8 +3,8 @@ import markdown
 from input_validator import ValidationError, validate_command, validate_arguments
 
 def convert_markdown_to_html(args):
-    inputpath = args[2]
-    outputpath = args[3]
+    inputpath = args[0]
+    outputpath = args[1]
 
     with open(inputpath, 'r') as f:
         markdown_content = f.read()
@@ -25,8 +25,10 @@ if __name__ == '__main__':
         validate_command(sys.argv, command_rules)
         validate_arguments(sys.argv, command_rules)
 
-        command_function = command_rules[sys.argv[1]]['function']
-        command_function(sys.argv)
+        command = sys.argv[1]
+        command_args = sys.argv[2:]
+        command_function = command_rules[command]['function']
+        command_function(command_args)
 
     except ValidationError as err:
         sys.stderr.buffer.write(b'Error: ' + str(err).encode() + b'\n')
