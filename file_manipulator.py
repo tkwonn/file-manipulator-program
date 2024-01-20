@@ -2,9 +2,14 @@ import sys
 from input_validator import ValidationError, is_positive_integer, validate_command, validate_arguments
 
 
+def get_paths(args):
+    inputpath = args[0]
+    outputpath = args[1]
+    return inputpath, outputpath
+
+
 def reverse_file_contents(args):
-    inputpath = args[2]
-    outputpath = args[3]
+    inputpath, outputpath = get_paths(args)
     contents = ''
 
     with open(inputpath) as f:
@@ -15,8 +20,7 @@ def reverse_file_contents(args):
         
 
 def copy_file_to_path(args):
-    inputpath = args[2]
-    outputpath = args[3]
+    inputpath, outputpath = get_paths(args)
 
     with open(inputpath, 'r') as firstfile, open(outputpath, 'w') as secondfile:
         for line in firstfile:
@@ -24,7 +28,7 @@ def copy_file_to_path(args):
 
 
 def duplicate_file_contents(args):
-    inputpath = args[2]
+    inputpath, _ = get_paths(args)
     count = args[3]
     contents = ''
 
@@ -37,9 +41,9 @@ def duplicate_file_contents(args):
 
 
 def replace_string_in_file(args):
-    inputpath = args[2]
-    oldstring = args[3]
-    newstring = args[4]
+    inputpath = args[0]
+    oldstring = args[1]
+    newstring = args[2]
     contents = ''
 
     with open(inputpath, 'r') as f:
@@ -67,8 +71,11 @@ if __name__ == '__main__':
         validate_command(sys.argv, command_rules)
         validate_arguments(sys.argv, command_rules)
 
-        command_function = command_rules[sys.argv[1]]['function']
-        command_function(sys.argv)
+        command = sys.argv[1]
+        command_args = sys.argv[2:]
+        print(command_args)
+        command_function = command_rules[command]['function']
+        command_function(command_args)
 
     except ValidationError as err:
         sys.stderr.buffer.write(b'Error: ' + str(err).encode() + b'\n')
