@@ -7,22 +7,31 @@ import sys
 import random
 import math
 
+LOWER_PROMPT = b'Enter lower bound: '
+UPPER_PROMPT = b'Enter upper bound: '
+
 # Using the behavior of a do-while loop
 while(True):
-    sys.stdout.buffer.write(b'Enter lower bound: ')
-    sys.stdout.flush()
-    lower = int(sys.stdin.buffer.readline())
-
-    sys.stdout.buffer.write(b'Enter upper bound: ')
-    sys.stdout.flush()
-    upper = int(sys.stdin.buffer.readline())
-
-    if(lower >= upper):
-        sys.stdout.buffer.write(b'Please make sure the lower bound is bigger than the upper bound!\n')
+    try:
+        sys.stdout.buffer.write(LOWER_PROMPT)
         sys.stdout.flush()
-        continue
-    else:
-        break
+        lower = int(sys.stdin.buffer.readline())
+
+        sys.stdout.buffer.write(UPPER_PROMPT)
+        sys.stdout.flush()
+        upper = int(sys.stdin.buffer.readline())
+
+        if lower >= upper:
+            sys.stderr.buffer.write(b'Lower bound must be less than upper bound.\n')
+            sys.stderr.flush()
+            continue
+        else:
+            break
+    
+    except ValueError:
+        sys.stderr.buffer.write(b'Invalid input. Please enter an integer.\n')
+        sys.stderr.flush()
+
 
 
 random_number = random.randint(lower, upper)
