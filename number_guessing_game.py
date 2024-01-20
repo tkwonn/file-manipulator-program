@@ -30,6 +30,7 @@ minimum_number_guess = math.ceil(math.log2(upper - lower + 1))
 
 # encode strings to bytes before writing them to the buffer
 sys.stdout.buffer.write(b'\nYou have only ' + str(minimum_number_guess).encode() + b' chances to guess the number\n')
+sys.stdout.flush()
 
 count = 1
 

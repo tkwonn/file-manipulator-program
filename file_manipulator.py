@@ -73,5 +73,5 @@ if __name__ == '__main__':
     except ValidationError as err:
         sys.stderr.buffer.write(b'Error: ' + str(err).encode() + b'\n')
         sys.stderr.flush()
-        sys.exit()
+        sys.exit(1)
 
